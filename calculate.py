@@ -60,8 +60,19 @@ def main():
                 prod_p_neg*=(p_rep_status[0][j]*data[j]+(1-p_rep_status[0][j])*(1-data[j]))
             prediction[idx] = prod_p_pos*p_pos / (prod_p_pos*p_pos+prod_p_neg*(1-p_pos))
         print('accuracy : {:.4f}%'.format(100*sum(y_test == (prediction>0.5).astype(np.int64))/x_test.shape[0]))
-    elif args.methods =='K_means':
-        pass
+    elif args.methods =='K_Means':
+        x1 = np.random.uniform(-5,0,100)
+        y1 = np.random.uniform(-5,0,100)
+        x2 = np.random.uniform(5,10,50)
+        y2 = np.random.uniform(5,10,50)
+        data1 = np.vstack([x1,y1]).T
+        data2 = np.vstack([x2,y2]).T
+        data = np.concatenate([data1,data2],axis=0)
+        clusters,centroids =globals()[args.methods](data)
+        print(data1.mean(axis=0))
+        print(data2.mean(axis=0))
+        print(centroids)
+        import pdb;pdb.set_trace()
 if __name__=='__main__':
     main()
 

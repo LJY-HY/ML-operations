@@ -159,11 +159,36 @@ def Naive_Bayes(x,y):
     p_rep_status[0]/=(number_of_negatives+number_of_class)
     return x_threshold,p_rep_status,p_pos
 
-def K_means():
-    pass
+def K_Means(data):
+    '''
+    input
+        data : [data size, rep]
+    '''
+    number_of_centroids = 2
+    rep_size = data.shape[1]
+    centroids = np.random.uniform(data.min(),data.max(),(number_of_centroids,rep_size))
+    k=0
+    while k<5000:
+        flag=0
+        k+=1
+        # Expectation
+        clusters = [[] for _ in range(number_of_centroids)]
+        euclidean_distance = np.zeros((data.shape[0],number_of_centroids))
+        for i in range(number_of_centroids):
+            euclidean_distance[:,i]=np.sum((data-centroids[i])**2,axis=1)
+        for idx,centroid in enumerate(euclidean_distance.argmin(axis=1)):
+            clusters[centroid].append(data[idx])
+
+        # Maximization
+        new_centroids = np.array([[0 for _ in range(rep_size)] for _ in range(number_of_centroids)],dtype=np.float64)
+
+        for i in range(number_of_centroids):
+            new_centroids[i] = sum(clusters[i])/len(clusters[i])
+
+        # convergence
+        centroids = new_centroids
+        return clusters, centroids
+
 
 def Random_Forest():
-    pass
-
-def EM_Algorithm():
     pass
