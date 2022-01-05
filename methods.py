@@ -82,7 +82,8 @@ def Logistic_Regression(x,y,number_of_class,learning_rate=0.0001,epochs=300000,b
         batch_mask = np.random.choice(x.shape[0],batch_size)
         x_batch = x[batch_mask]
         y_batch = y[batch_mask]
-        z = sigmoid(x_batch.dot(w)+b)               # [bsz,1]
+        #z = sigmoid(x_batch.dot(w)+b)               # [bsz,1]
+        z = softmax(x_batch.dot(w)+b)               # [bsz,1]
         dw = (y_batch-z).T.dot(x_batch)/batch_size  # [number of class,bsz]x[bsz,rep] = [number of class,rep]
         db = (y_batch-z).mean(axis=0)               # [1,number of class]
         w+=learning_rate*dw.T
